@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <title>Testing</title>
+    <script src='../js/jquery-1.14.1.min.js'></script>
+    <script src='../js/aframe.min.js'></script>
+    <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
+    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
+    <script>
+        // line 107 and 171 has the console.log statements you are searching for
+        var sessionManager = {
+                axisOfOrientation: 2, //= z, 1 = y, 0 = x
+                dir: {
+                    upDown: 0,
+                    rightLeft: 0,
+                    thrust: 0
+                },
+                speed: {x: 0, y:0, z: 0},
+                grounded: true,
+                cycles: 0
+            };
+        $(document).ready(function(){
+            
+            //var entity = document.querySelector('[sound]');
+            document.onkeypress = function(e) {
+                e = e || window.event;
+                var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+                
+                if (charCode) {
+                    var action = String.fromCharCode(charCode);
+                  //  console.log("Character typed: " + action);
+                }
+                
+                switch(action) {
+                    case 'i':
+                        console.log('nose down');
+                        if(!sessionManager.grounded){ //if flying and you press nose down, slow down
+                            sessionManager.dir.upDown--;    
+                        }
+                       // console.log(viewPosition);
+                        break;
+                    case 'j':
+                        console.log('bank left');
+
+                        sessionManager.dir.rightLeft--;
+                        break;
+                    case 'k':
+                        console.log('slow down/pull up');
+                        if(sessionManager.grounded){
+                            sessionManager.dir.upDown--;    
+                        }
+                        //console.log(position);
+                        break;
+                    case 'l':
+                        console.log('bank right');
+                        sessionManager.dir.rightLeft++;
+                        break;
+                    case ' ':
+                        console.log('increase thrust');            
+                        sessionManager.dir.upDown++;
+                        if(!sessionManager.grounded){
+                            sessionManager.dir.thrust++;    
+                        }
+                        break;
+                    default:
+                        console.log('no associated movement');
+                        break;
+                }
+            };
+            
+            setInterval(function(){
+                
+                speedUpdate();
+                
+            }, 500);
+            //entity.components.sound.stopSound();
+            //entity.components.sound.pauseSound();
+            
+/*            setTimeout(function(){
+                entity.components.sound.playSound();
+            }, 10000);
+            
+            $('#go').click(function(){
+                console.log('we taking over');
+            });*/
+        });
+        
+        function takeoff(){
+            var able = Math.abs(sessionManager.speed.z);
+            
+            if(able>6){
+                sessionManager.dir.thrust = 2;
+                sessionManager.grounded = false;
+                sessionManager.speed.y += sessionManager.dir.thrust;
+            }
+        }
+        
+        function speedUpdate(){
+            takeoff();
+            
+            var direction = sessionManager.dir;
+            var position, viewPosition;
+
+            var speedRateZ = sessionManager.speed.z, speedRateY = sessionManager.speed.y, speedRateX = sessionManager.speed.x;
+               // console.log(`[i] xaxis: ${speedRateX} | yaxis: ${speedRateY} | zaxis: ${speedRateZ}`);
+
+                var airplane = document.getElementById('single-prop-plane');
+                var pilotView = document.getElementById('userView');
+                position = airplane.getAttribute('position');
+                viewPosition = pilotView.getAttribute('position');
+
+                speedRateX = 0.5*direction.rightLeft;
+                speedRateY = 0.5*direction.thrust;
+                speedRateZ = 0.5*direction.upDown;
+
+                if(direction.upDown>0){
+                    if(sessionManager.grounded){
+                        console.log('moving forward');
+                        position.z-=speedRateZ;
+                        viewPosition.z-=speedRateZ;    
+                    }
+                    else{
+                        console.log('increasing thrust');
+                        position.y+=speedRateY;
+                        viewPosition.y+=speedRateY;
+                        
+                        position.z-=speedRateZ;
+                        viewPosition.z-=speedRateZ;
+                    }
+                }
+                else if(direction.upDown<0){
+                    if(sessionManager.grounded){
+                        console.log('moving backward');
+                        position.z-=speedRateZ;
+                        viewPosition.z-=speedRateZ;
+                    }
+                    else{
+                        console.log('move down');
+                        position.z-=speedRateZ;
+                        viewPosition.z-=speedRateZ;   
+                    }
+                }
+                else{
+                   // console.log('no motion in the up down axis');
+                }
+
+                if(direction.rightLeft>0){
+                    console.log('moving right');
+                    position.x+=speedRateX;
+                    viewPosition.x+=speedRateX;
+                }
+                else if(direction.rightLeft<0){
+                    console.log('moving left');
+                    position.x+=speedRateX;
+                    viewPosition.x+=speedRateX;
+                }
+                else{
+                   // console.log('no motion in the right left axis');
+                }
+
+                sessionManager.speed.z = speedRateZ;
+                sessionManager.speed.y = speedRateY;
+                sessionManager.speed.x = speedRateX;
+
+                airplane.setAttribute('position', position);
+
+                pilotView.setAttribute('position', viewPosition);
+                
+               // console.log(`[o] xaxis: ${speedRateX} | yaxis: ${speedRateY} | zaxis: ${speedRateZ}`);
+                
+                sessionManager.cycles++;
+            }
+    </script>
+</head>
+<body>
+    <a-scene id='main-app-container'>
+        <a-assets>
+            <img id='grid' src='../img/immersive/media/assets/grid_base.png' />
+            <a-asset-item id='aeroplane' src='../img/immersive/media/assets/3.2.dae'></a-asset-item>
+        </a-assets>
+        <!--<a-entity>-->
+            <a-camera look-controls wasd-controls id='userView' position='0 2 0' rotation='0 0 0'>
+                <a-cursor
+                          animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+                          animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+                          event-set__1="_event: mouseenter; color: springgreen"
+                          event-set__2="_event: mouseleave; color: black"
+                          fuse="true"
+                          raycaster="objects: .link">
+                </a-cursor>
+
+            </a-camera>
+        <!--</a-entity>-->
+        
+        <a-entity id='single-prop-plane' collada-model='#aeroplane' position='0 0 -5' rotation='0 180 0'></a-entity>
+        <!--
+as a detached entity:
+c0 2 0 p0 0 -5,
+
+
+as an attached entity (camera position does not matter):
+0 -1 0, 0 -3 0, 0 -4 -4, 0 -4 -5, 0 -7 -10
+
+side view: 1 -1 -1, 1 -1.5 0, 1 -1.5 1 (w/out wing)-->
+        
+        
+        <a-plane src='#grid' material='repeat: 10 200' position='0 0 -100' height='200' width='10' rotation='-90 0 0'></a-plane>
+        <a-plane material='color: green' position='20 0 -50' height='100' width='30' rotation='-90 0 0'></a-plane>
+        <a-plane material='color: green' position='-20 0 -50' height='100' width='30' rotation='-90 0 0'></a-plane>
+        <a-plane material='color: blue' position='20 0 -150' height='100' width='30' rotation='-90 0 0'></a-plane>
+        <a-plane material='color: blue' position='-20 0 -150' height='100' width='30' rotation='-90 0 0'></a-plane>
+        <!--<a-sky src='#museum'></a-sky>-->
+        <!-- DONE) animate appearance of plane
+DONE) add text to plane
+3) attach camera to top of airplane
+4) animate zooming into the cockpit
+5) "teleport" to a new scene if needed
+6) record panic audio "i need your help to land this plane!"
+7) "look around for the smart auto pilot engage feature!"
+8) nice now before i can handle the landing procedure I need to verify that you're a human
+9) "sorry I'm first generation i dont actually have a camera eye to see"
+10) "dont worry entry is simple just answer this simple entry question"
+11) "who were the first people to fly in and out of the college park airport after its establishment?"
+12a) if they choose correctly "The Wright Brothers" they plane lands and they get a view of the airport
+12b) if they choose incorrectly then the plane keeps going alarms go off and a portal appears before them
+the autpilot tells the user to brace for teleportation! and then the user ends up in the museum in fornt of the screen telling them to go to the museum-->
+    </a-scene>
+</body>
+</html>

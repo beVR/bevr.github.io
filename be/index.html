@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>be - v. 0.6.0</title>
+    <meta property="og:url"           content="https://starmaker2130.github.io" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="be" />
+    <meta property="og:description"   content="College Park\'s premier immersive search and discovery application" />
+<!--<meta property="og:image"         content="" />-->
+
+    <link rel='stylesheet' href='css/main.css' type='text/css' />
+    <link rel='stylesheet' href='css/bprofile.css' type='text/css' />
+    <script src='js/jquery-1.14.1.min.js'></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="./css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <!-- Clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+    <script>
+
+        var cityDataBase = {
+            'College Park' : {
+                city: 'College Park',
+                center: null,
+                experienceContentList : {
+                    'College Park Aviation Museum': {
+                        position: {lat: 38.978833, lng: -76.922278},
+                        type: 0,
+                        description: 'aviation museum',
+                        src: './exp4',
+                        upcomingEvents: [
+                            {
+                                name:'aviation1',
+                                bgImgSrc: './img/CSPAC/600_Highwaymen.jpg',
+                                redirect: 'https://theclarice.umd.edu/node/4347'
+                            }
+                        ],
+                        propic: './img/POI_imgs/college-park-aviation.png'
+                    },
+                    'Milkboy Arthouse': {
+                        position: {lat: 38.981453, lng: -76.938174},
+                        type: 0,
+                        description: 'milkboy arthouse',
+                        src: './MilkBoyArtHouse',
+                        upcomingEvents: [
+                            {
+                                name: 'milkboy1',
+                                bgImgSrc: './img/CSPAC/600_Highwaymen.jpg',
+                                redirect: 'http://theclarice.umd.edu/series/2017-2018-milkboy-arthouse'
+                            },
+                            {
+                                name: 'milkboy2',
+                                bgImgSrc: './img/CSPAC/Antigone.png',
+                                redirect: 'http://theclarice.umd.edu/events/2017/warren-wolf-and-the-wolfpack'
+                            }
+                        ],
+                        propic: './img/POI_imgs/MilkBoy_ArtHouse.png'
+                    },
+                    'CSPAC': {
+                        position: {lat: 38.9905285, lng: -76.9525711},
+                        type: 2,
+                        description: 'The Clarice Smith Performing Arts Center is creating the NextNOW. We are building the future of the arts by educating, training and presenting the next generation of artists and creative innovators.',
+                        src: './CSPAC',
+                        upcomingEvents: [
+                            {
+                                name: 'cspac1',
+                                bgImgSrc: './img/CSPAC/600_Highwaymen.jpg',
+                                redirect: 'https://theclarice.umd.edu/node/4347'
+                            },
+                            {
+                                name: 'cspac2',
+                                bgImgSrc: './img/CSPAC/Antigone.png',
+                                redirect: 'https://theclarice.umd.edu/node/4385'
+                            },
+                            {
+                                name: 'cspac3',
+                                bgImgSrc: './img/CSPAC/Belarus_Theatre.jpg',
+                                redirect: 'https://theclarice.umd.edu/node/4330'
+                            }
+                        ],
+                        propic: './img/POI_imgs/cspac.png'
+                    },
+                    'Lake Artemesia': {
+                        position: {lat: 38.987649, lng: -76.922087},
+                        type: 2,
+                        description: 'Developed during the construction of the nearby Washington Metro rail line, this park is named for local resident Artemesia N. Drefs, who donated 10 lots to be used as open space. Her family initially used the natural ponds as a goldfish farm. Today, this public park consists of a 38-acre lake, a handicapped accessible fishing pier, and aquatic gardens. More than two miles of hiker-biker trails surround and connect the lake with Calvert Road Park and College Park Airport and Aviation Museum. The Luther Goldman Birding Trail attracts both expert and novice bird watchers hoping to glimpse finches, orioles, ibis, and other birds. The Prince George\'s Audubon Society hosts bird walks every 1st and 3rd Thursday of the month. Lake Artemesia is a great place for fishing.',
+                        src: './park',
+                        upcomingEvents: [],
+                        propic: './img/POI_imgs/lake_artemesia.png'
+                    },
+                    'Art-Sociology Gallery': {
+                        position: {lat: 38.985158, lng: -76.947523},
+                        type: 2,
+                        description: 'The Clarice Smith Performing Arts Center is creating the NextNOW. We are building the future of the arts by educating, training and presenting the next generation of artists and creative innovators.',
+                        src: './artSoc',
+                        upcomingEvents: [
+                            {
+                                name: 'gallery1',
+                                bgImgSrc: './img/CSPAC/600_Highwaymen.jpg',
+                                redirect: 'https://theclarice.umd.edu/node/4347'
+                            },
+                            {
+                                name: 'gallery2',
+                                bgImgSrc: './img/CSPAC/Antigone.png',
+                                redirect: 'https://theclarice.umd.edu/node/4385'
+                            },
+                            {
+                                name: 'gallery3',
+                                bgImgSrc: './img/CSPAC/Belarus_Theatre.jpg',
+                                redirect: 'https://theclarice.umd.edu/node/4330'
+                            },
+                            {
+                                name: 'gallery4',
+                                bgImgSrc: './img/CSPAC/ChoreoShowcase35.jpg',
+                                redirect: 'https://theclarice.umd.edu/node/4336'
+                            }
+                        ],
+                        propic: './img/POI_imgs/Parren_Mitchell_building.jpg'
+                    },
+                    'Edward St. John\'s Educational Learning Center': {
+                        position: {lat: 38.987193, lng: -76.942062},
+                        type: 2,
+                        description: 'The Clarice Smith Performing Arts Center is creating the NextNOW. We are building the future of the arts by educating, training and presenting the next generation of artists and creative innovators.',
+                        src: './esj',
+                        upcomingEvents: [
+                            {
+                                name: 'esj1',
+                                bgImgSrc: './img/CSPAC/600_Highwaymen.jpg',
+                                redirect: 'https://theclarice.umd.edu/node/4347'
+                            }
+                        ],
+                        propic: './img/POI_imgs/esj_building.png'
+                    }
+                }
+            },
+            'Silver Spring main' : {
+                city: 'Silver Spring (main)',
+                center: null,
+                experienceContentList: {
+                    'Cava Grill': {
+                        position: {lat: 38.9966081, lng: -77.0248265},
+                        type: 3,
+                        description: 'EAT - dining',
+                        src: './void'
+                    },
+                    'Silver Spring Town center, Inc': {
+                        position: {lat:38.9973211, lng: -77.0246818},
+                        type: 3,
+                        description: 'WATCH - arts and entertainment (films)',
+                        src: './void'
+                    },
+                    'Zed\'s Cafe': {
+                        position: {lat:38.9924623, lng: -77.026314},
+                        type: 3,
+                        description: 'PARTY - outdoor games',
+                        src: './void'
+                    },
+                    'Negril Jamaican Eatery': {
+                        position: {lat: 38.9931181, lng: -77.0260355},
+                        type: 3,
+                        description: 'EAT - dining',
+                        src: './void'
+                    },
+                    'Silver Spring Books': {
+                        position: {lat: 38.9936061, lng: -77.0253821},
+                        type: 3,
+                        description: 'WATCH - arts and entertainment (films)',
+                        src: './void'
+                    },
+                    'AFI Silver Theatre and Cultural Center': {
+                        position: {lat: 38.9965658, lng: -77.0274675},
+                        type: 3,
+                        description: 'PARTY - outdoor games',
+                        src: './void'
+                    },
+                    'The Fillmore Silver Spring': {
+                        position: {lat: 38.9974334, lng: -77.0275908},
+                        type: 3,
+                        description: 'EAT - dining',
+                        src: './void'
+                    },
+                    'Dave and Buster\'s': {
+                        position: {lat: 38.9970677, lng: -77.0269637},
+                        type: 3,
+                        description: 'WATCH - arts and entertainment (films)',
+                        src: './void'
+                    }
+                }
+            },
+            'Silver Spring base' : {
+                city: 'Silver Spring (base)',
+                center: null,
+                experienceContentList: {
+                    'The Bagelry': {
+                        position: {lat: 39.0748538, lng: -77.0038302},
+                        type: 3,
+                        description: 'EAT - dining',
+                        src: './void'
+                    },
+                    'Redbox': {
+                        position: {lat: 39.0666641, lng: -77.0012755},
+                        type: 3,
+                        description: 'WATCH - arts and entertainment (films)',
+                        src: './void'
+                    },
+                    'West Fairland Park': {
+                        position: {lat: 39.0756617, lng: -76.9661063},
+                        type: 3,
+                        description: 'PARTY - outdoor games',
+                        src: './void'
+                    }
+                }
+            }
+        };
+
+        var sessionManager = {
+            login: {
+                confirmed: false,
+                alias: null,
+                city: {
+                    name: null,
+                    center: null,
+                    experienceContentList: null
+                },
+                experienceOfInterest: null
+            },
+            locations: null,
+            markerList : [],
+            tabOpen: false,
+            tabSelected: null,
+            tabInfo: {
+                name: null,
+                type: null,
+                upcomingEvents: null
+            },
+            iconList: [
+                'img/icons/eye-icon.png',
+                'img/icons/eye-icon.png',
+                'img/icons/eye-icon.png',
+                'img/icons/eye-icon.png'
+            ],
+            myLatLng: {
+                lat: null,
+                lng: null
+            },
+            viewType: null,
+            shareOpen: false,
+            src: null,
+            profilePictureSrc: null,
+        };
+        
+        $(document).ready(function(){
+            var VL = $('#veldt-logo');
+            var mouseDown, mousePosition, offset = [0, 0];
+
+            var offCount = 1;
+            
+            // locateUser(); // temporary for initial CP test release; fix of 'green screen' bug
+
+            var btn = document.getElementById('copyButton');
+            var clipboard = new Clipboard(btn);
+            
+            $('.dashboard-option').click(function(){ //the dashboard doesn't exist but this functionality still does, simply kept the class for convenience's sake; recommend modifying later to make the code more readable
+                
+                var option = $(this).attr('id').charAt(0);
+                
+                if(option=='e'){
+                    console.log('view map');
+                    
+                    $('#reservation-container').empty();
+                    
+                    $('#profile-container').children().hide(500);
+                    
+                    $('#profile-container').animate({
+                        width: 0
+                    }, 1000, function(){
+                        $(this).css({
+                            display: 'none'
+                        });
+                    });
+                    
+                    $('#map-container').animate({
+                        opacity: 1.0
+                    }, 1000);
+                }
+                else{
+                    //console.log(`view profile for ${sessionManager.tabInfo.name}`);
+                    
+                    $('#user-name-label').text(sessionManager.tabInfo.name);
+                    
+                    if(sessionManager.tabInfo.upcomingEvents!=null){
+                        var bgImgSrc, redirect, curr;
+                        
+                        for(var i=0; i<sessionManager.tabInfo.upcomingEvents.length; i++){
+                            curr = sessionManager.tabInfo.upcomingEvents[i];
+                            bgImgSrc = curr.bgImgSrc;
+                            redirect = curr.redirect;
+                            
+                            console.log(bgImgSrc);
+                            $('#reservation-container').append(`<div id='ticket-${i}' class='reservation-ticket'></div>`);
+                            $(`#ticket-${i}`).css({
+                                backgroundImage: `url(${bgImgSrc})`,
+                                backgroundSize: '100% 100%',
+                                backgroundRepeat: 'no-repeat',
+                                cursor: 'pointer'
+                            });
+                            
+                            $(`#ticket-${i}`).click(function(){
+                                window.location.assign(redirect);
+                            });
+                        }
+                    }
+                        
+                    $('#profile-container').find('*').show(500, function(){
+                        $('.reservation-ticket, .past-event, .room-link').css({
+                            display: 'inline-block'
+                        });
+                    });// shows user profile
+                    
+                    $('#profile-container').show().animate({
+                        width: '100%'
+                    }, 1000);
+                    
+                    $('#map-container').animate({
+                        opacity: 0.2
+                    }, 1000);
+
+                    $('#user-profile-pic').css("backgroundImage",`url(${sessionManager.profilePictureSrc})`);
+                }
+                
+            });
+            
+            $('#return-view').click(function(){
+                toggleShareMedia();
+            });
+            
+            $('#view-experience-button, #user-profile-pic').click(function(){
+                var dest = sessionManager.src || './void';
+                window.location.assign(dest);
+            });
+            
+            $('#share-experience-button').click(function(){
+                toggleShareMedia();
+            });
+            
+            $('#close-tab-button').click(function(){
+                var w = VL.width(), mobile = false;
+                if(w<100){
+                    mobile = true;
+                }
+                closeTab(mobile, VL, 1000);
+            });
+            
+            VL.animate({
+                 opacity: 1.0
+            }, 1000, function(){
+                flashLogoVisibility(offCount);
+            });
+           // locateUser();
+            //initMap();
+        });
+        
+        function flashLogoVisibility(o){
+            $('#veldt-logo').animate({
+                opacity: 0
+            }, 1000, function(){
+                $(this).animate({
+                    opacity: 1.0
+                }, 1000, function(){
+                    o--;
+                    if(o==0){
+                        settle($(this));
+                    }
+                    else{
+                        flashLogoVisibility(o);
+                    } 
+                });
+            })
+        }
+        
+        function detectmobile(){
+
+        }
+        
+        
+        function settle(vl){
+            var VL = vl;
+            setTimeout(function(){
+                VL.val('').addClass('veldt-logo-img').animate({
+                    bottom: '7%'
+                }, 1000, function(){
+                    $('#welcome-text').show().animate({
+                        opacity: 1.0
+                    }, 2000);
+                });
+                
+                $('#logo-label').show().delay(1000).animate({
+                    opacity: 1.0
+                }, 2000);
+                
+             //   setTimeout(function(){
+                    $(document).on('click touch', function(){ /*touchstart*/
+                        var elem = document.documentElement;
+                        if (elem.requestFullscreen) {
+                            elem.requestFullscreen();
+                        } else if (elem.mozRequestFullScreen) {
+                            elem.mozRequestFullScreen();
+                        } else if (elem.webkitRequestFullscreen) {
+                            elem.webkitRequestFullscreen();
+                        }
+                        $(document).off('click touch');
+                        console.log('setting bg image');
+                        confirmUser({confirm: true, type: 0});
+                    });    
+            //    }, 1900)
+                
+            }, 2000);
+        }
+        
+        var map;
+        
+        function toggleShareMedia(){
+            if(sessionManager.shareOpen){
+                $('#share-media-overlay').animate({
+                    opacity: 0
+                }, 1000, function(){
+                    $(this).css({
+                        zIndex: -999
+                    });
+                });
+                sessionManager.shareOpen = false;
+            }
+            else{
+                $('#share-media-overlay').css({
+                    zIndex: 999
+                }).animate({
+                    opacity: 1.0
+                }, 1000);
+                sessionManager.shareOpen = true;
+            }
+        }
+        
+        function showAppInfoPage(){
+            var w = $('#veldt-logo').width(), mobile = false; //TODO: this code is redundant, place it in a function that returns a true or false value based on the condition 
+            if(w<100){
+                mobile = true;
+            }
+            
+            var dim = '125px';
+            
+            if(mobile){
+                dim = '75px';
+            /*    logo.css({
+                    width: '55px',
+                    height: '55px'
+                });*/
+            }
+            
+            $('#veldt-logo').off('click').css({
+                boxShadow: 'none'
+            }).animate({
+                bottom: '7%',
+                left: '50%',
+                width: dim,
+                height: dim
+            }, 2000);
+            
+            sessionManager.tabOpen = false;
+            sessionManager.tabInfo.name = null;
+            sessionManager.tabInfo.type = null;
+            
+            $('.tab-options, .page2').hide();
+
+            $('#cover').animate({
+                height: '100%'
+            }, 1000, function(){
+                $(document).on('click touch', function(){ /*touchstart*/
+                    $(document).off('click touch'); /*touchstart*/
+
+                    $('#user-dashboard').show().animate({
+                        height: '10%'
+                    }, 1000);
+
+                    $('#veldt-logo').animate({
+                        bottom: '3%'
+                    }, 1000 , function(){
+
+                        $(this).click(function(){
+                            showAppInfoPage();
+                        });
+
+                    });
+
+                     $('#cover').animate({
+                         height: 0
+                     }, 1000);
+
+                     $('#login-form').hide().css({
+                         opacity: 0
+                     });
+
+                     $('#logo-label, #welcome-text').hide();
+                });
+
+                $('#logo-label').empty().text('tap anywhere to return');
+
+                $('#logo-label, #welcome-text').css({
+                    opacity: 0
+                }).show().animate({
+                    opacity: 1.0
+                }, 1000);
+            });
+        }
+        
+        function confirmUser(data){
+            
+            $('#logo-label, #welcome-text').hide();
+//            $('#veldt-logo').off('click');  //this may be redundant given the changes to fullscreen event (clicking anywhere on the first page triggers the event); run some tests and see if that is the case if
+            
+            $('#veldt-logo').click(function(){
+                //toggleShareMedia();
+                showAppInfoPage();
+            });
+            
+            console.log('login success: '+data.confirm);
+                if(data.confirm){
+                    sessionManager.login.confirmed = true;
+                    sessionManager.login.alias = new Date().getTime();
+
+                    $('#user-dashboard').show().animate({
+                        height: '10%'
+                    }, 1000);
+                    
+                    $('#veldt-logo').animate({
+                        bottom: '3%'
+                    }, 1000 /*, function(){
+                        
+                    }*/);
+                    
+                    $('#cover').animate({
+                        height: 0
+                    }, 1000);
+                    
+                    $('#login-form').hide().css({
+                        opacity: 0
+                    });
+                    
+                    sessionManager.markerList.forEach(function(element, index){
+                        element.marker.setMap(map);
+                    });
+                    
+
+                    sessionManager.viewType = data.type;
+                    if(sessionManager.viewType==0){
+                        console.log('user account accessed.');
+
+                    }else if(sessionManager.viewType==1){
+                        console.log('business account accessed.');
+                    }
+                }
+                else{
+                    console.log('wrong credentials, try again...');
+                }
+            }
+        
+        function locateUser(){
+            var coords = false, geo = navigator.geolocation;
+            if (geo) {
+                geo.getCurrentPosition(initMap, purgatory);
+            } else {
+                console.log('Geolocation is not supported by this browser.');
+                //initMap();
+            }
+            //return coords;
+        }
+        
+        function purgatory(){
+            console.log('could not locate user');
+           /* setTimeout(function(){
+                window.location.assign('/void');
+            }, 3000);*/
+        }
+        
+        function initMap(position){
+            console.log('initializing map...');
+            
+            sessionManager.myLatLng.lat = 38.9809271; //parseFloat(position.coords.latitude); //
+            sessionManager.myLatLng.lng = -76.9370323; //parseFloat(position.coords.longitude); //
+            
+            console.log('position lat: '+sessionManager.myLatLng.lat);
+            console.log('position lng: '+sessionManager.myLatLng.lng);
+            
+            map = new google.maps.Map(document.getElementById('map-container'), {
+                center: sessionManager.myLatLng,
+                zoom: 13,
+                styles: [
+                    {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+                    {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+                    {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+                    {
+                        featureType: 'transit',
+                        elementType: 'labels',
+                        stylers: [
+                          { visibility: 'off' }
+                        ]
+                    },
+                    {
+                        featureType: "water",
+                        elementType: "labels",
+                        stylers: [
+                          { visibility: "off" }
+                        ]
+                    },
+                    {
+                        featureType: 'road',
+                        elementType: 'geometry',
+                        stylers: [
+                            {color: '#38414e'}
+                        ]
+                    },
+                    {
+                        featureType: 'road',
+                        elementType: 'labels',
+                        stylers: [
+                            {color: '#38414e'}
+                        ]
+                    },
+                    {
+                        featureType: 'administrative.locality',
+                        elementType: 'labels.text.fill',
+                        stylers: [
+                            {color: '#ffffff'}
+                        ]
+                    },
+                    {
+                        featureType: 'administrative.neighborhood',
+                        elementType: 'labels',
+                        stylers: [
+                            {visibility: 'off'}
+                        ]
+                    },
+                    {
+                        featureType: 'administrative.province',
+                        elementType: 'labels',
+                        stylers: [
+                            {visibility: 'off'}
+                        ]
+                    },
+                    {
+                        featureType: 'poi',
+                        elementType: 'labels',
+                        stylers: [
+                            {visibility: 'off'}
+                      ]
+                    }/*,
+                    {
+                      featureType: 'poi.park',
+                      elementType: 'geometry',
+                      stylers: [{color: '#263c3f'}] //
+                    },
+                    {
+                      featureType: 'poi.park',
+                      elementType: 'labels.text.fill',
+                      stylers: [{color: '#6b9a76'}]
+                    },
+                    {
+                      featureType: 'road',
+                      elementType: 'geometry',
+                      stylers: [{color: '#38414e'}]
+                    },
+                    {
+                      featureType: 'road',
+                      elementType: 'geometry.stroke',
+                      stylers: [{color: '#212a37'}]
+                    },
+                    {
+                      featureType: 'road',
+                      elementType: 'labels.text.fill',
+                      stylers: [{color: '#9ca5b3'}]
+                    },
+                    {
+                      featureType: 'road.highway',
+                      elementType: 'geometry',
+                      stylers: [{color: '#746855'}]
+                    },
+                    {
+                      featureType: 'road.highway',
+                      elementType: 'geometry.stroke',
+                      stylers: [{color: '#1f2835'}]
+                    },
+                    {
+                      featureType: 'road.highway',
+                      elementType: 'labels.text.fill',
+                      stylers: [{color: '#f3d19c'}]
+                    },
+                    {
+                      featureType: 'transit',
+                      elementType: 'geometry',
+                      stylers: [{color: '#2f3948'}]
+                    },
+                    {
+                      featureType: 'transit.station',
+                      elementType: 'labels.text.fill',
+                      stylers: [{color: '#d59563'}]
+                    },
+                    {
+                      featureType: 'water',
+                      elementType: 'geometry',
+                      stylers: [{color: '#17263c'}] //
+                    },
+                    {
+                      featureType: 'water',
+                      elementType: 'labels.text.fill',
+                      stylers: [{color: '#515c6d'}]
+                    },
+                    {
+                      featureType: 'water',
+                      elementType: 'labels.text.stroke',
+                      stylers: [{color: '#17263c'}]
+                    }*/
+                  ],
+                disableDefaultUI: true
+            });
+            
+            var marker = new google.maps.Marker({
+                position: sessionManager.myLatLng,
+                icon: {
+                    url: 'img/icons/user-location-icon.png',
+                    scaledSize: new google.maps.Size(20, 20)
+                },
+                title: 'User'
+            });
+            
+            marker.setMap(map);
+            findClosestDoor(sessionManager.myLatLng);
+        }
+        
+        function simpleGeographicMidpointLocator(experienceContentList){
+            var locationsArray = [], location, jump;
+            var latisum = 0, lonisum = 0, Wtotal = 0;
+
+            for(var key in experienceContentList){
+                if(experienceContentList.hasOwnProperty(key)){   
+                    location = experienceContentList[key];
+                    lati = location.position.lat * Math.PI/180;
+                    loni = location.position.lng * Math.PI/180;
+                    //  console.log('(in radians) lat: '+lati+' | lng: '+loni);
+
+                    wi = 1;
+
+                    latisum+=lati*wi;
+                    lonisum+=loni*wi;
+
+                    Wtotal += wi;
+
+                    jump = {
+                        title: key,
+                        position: location.position,
+                        type: location.type
+                    };
+                }
+                locationsArray.push(jump);
+            }
+
+            var latm = latisum/Wtotal;
+            var longm = lonisum/Wtotal;
+
+            latm = latm * 180/Math.PI;
+            longm = longm * 180/Math.PI;
+
+            return {lat: latm, lng: longm, locArray: locationsArray};
+        }
+
+        function findClosestDoor(userPosition){//TODO: Remove the redundant locations property from the sessionManager since the locArray is now available client side
+            console.log('------------------------------');
+            console.log('user located at...');
+            console.log('lat: '+userPosition.lat);
+            console.log('lng: '+userPosition.lng);
+            console.log('------------------------------');
+
+            var diffx = 0, diffy = 0, smallest = Infinity, smallestIndex;
+
+            for(key in cityDataBase){
+                var city = cityDataBase[key];
+                city.center = simpleGeographicMidpointLocator(city.experienceContentList);
+
+              /*  console.log('['+Object.keys(cityDataBase).indexOf(key)+'] city: '+key);
+                console.log('midpoint| lat: '+city.center.lat+' | long: '+city.center.lng+' |');
+                console.log('------------------------------');*/
+
+                diffx = Math.pow((city.center.lat - userPosition.lat), 2); 
+                diffy = Math.pow((city.center.lng - userPosition.lng), 2);
+                var curr = Math.sqrt(diffx+diffy);
+                if(curr<smallest){
+                    smallest = curr;
+                    smallestIndex = key;
+                }
+            }
+
+            sessionManager.login.city.name = smallestIndex;
+            sessionManager.login.city.experienceContentList = cityDataBase[smallestIndex].experienceContentList;
+            sessionManager.login.city.center = simpleGeographicMidpointLocator(cityDataBase[smallestIndex].experienceContentList);
+            console.log('closest city: '+sessionManager.login.city.name);
+            
+            sessionManager.locations = sessionManager.login.city.center.locArray;
+            produceMarkers();
+           
+            console.log('markers made!');
+        }
+        
+        function produceMarkers(){
+            console.log('producing markers...');
+             for(var i=0; i<sessionManager.locations.length; i++){
+                sessionManager.markerList.push(
+                    {
+                        marker: new google.maps.Marker({
+                            position: sessionManager.locations[i].position,
+                            icon: {
+                                url: sessionManager.iconList[sessionManager.locations[i].type],
+                                scaledSize: new google.maps.Size(50, 50)
+                            },
+                            title: sessionManager.locations[i].title,
+                            map: null, //to toggle leave this attribute empty or explicitly define its value as "null"; toggle the setting using the marker.setMap(map) method
+                            zIndex: 100 
+                        }),
+                        type: sessionManager.locations[i].type,
+                        
+                    }
+                );
+                 
+                sessionManager.markerList[i].marker.addListener('click', function(){
+                    var markerTitle = this.title;
+                    toggleMarkerInfoView(markerTitle);
+                });
+            }
+        }
+        
+        function closeTab(m, VL, anim){
+            var mobile = m, logo = VL, delay = anim;
+         
+            if(mobile){
+                logo.css({
+                    width: '75px',
+                    height: '75px'
+                });
+            }
+            else{
+                logo.css({
+                    width: '125px',
+                    height: '125px'
+                });
+            }
+                
+            logo.animate({
+                left: '50%',
+                bottom: '3%',
+            }, delay, function(){
+                $(this).css({
+                    boxShadow: 'none'
+                });
+            });
+                
+            $('.tab-options, #tab-poi-identifier-container').hide();
+            
+            $('#cover').animate({
+                height: 0
+            }, delay, function(){
+                sessionManager.tabOpen = false;
+                sessionManager.tabInfo.name = null;
+                sessionManager.tabInfo.type = null;
+            });
+        }
+        
+        function openTab(m, VL, title, mediaType, anim){
+            var mobile = m, logo = VL, name = title, mType = mediaType, delay = anim;
+            
+            sessionManager.tabSelected = name;
+            
+            if(mobile){
+                logo.css({
+                    width: '55px',
+                    height: '55px'
+                });
+            }
+            else{
+                logo.css({
+                    width: '125px',
+                    height: '125px'
+                });
+            }
+                
+            logo.animate({
+                left: '93%',
+                bottom: '7%',
+            }, delay, function(){
+                $(this).css({
+                    boxShadow: '5px 5px 10px white'
+                });
+            });
+                
+            $('#tab-poi-identifier').html(`${name} &nbsp;|&nbsp`);
+                
+            $('#tab-poi-type').html(mType);
+            
+            $('.tab-options').css({display: 'inline-block'});
+            $('#tab-poi-identifier-container').show();
+                
+                
+            $('#cover').animate({
+                height: '15%'
+            }, delay, function(){
+                sessionManager.tabOpen = true;
+                sessionManager.tabInfo.name = name;
+                sessionManager.src = cityDataBase["College Park"].experienceContentList[name].src;
+                sessionManager.tabInfo.upcomingEvents = cityDataBase["College Park"].experienceContentList[name].upcomingEvents;
+                sessionManager.profilePictureSrc = cityDataBase['College Park'].experienceContentList[name].propic;
+                console.log(`src ${sessionManager.src}`);
+                sessionManager.tabInfo.type = mType;
+            });
+        }
+        
+        function toggleMarkerInfoView(name){
+            var logo = $('#veldt-logo');
+            var loc = sessionManager.locations.findIndex(x => x.title==name);
+            var mType = sessionManager.markerList[loc].type;
+            
+            //console.log(`located in list at index ${loc} | type: ${mType}`);
+            
+            
+            
+            switch(mType){
+                case 0:
+                    mType = 'Dining';
+                    break;
+                case 1:
+                    mType = 'Nightlife';
+                    break;
+                case 2:
+                    mType = 'Arts & Ent.';
+                    break;
+                case 3:
+                    mType = 'Hotspot';
+                    break;
+                default:
+                    mType = 'Miscellaneous';
+                    break;
+            }
+            
+            var w = logo.width(), mobile = false; //h = logo.height(),
+            if(w<100){
+                mobile = true;
+            }
+            //console.log(`logo | width: ${w} height : ${h} | mobile ? ${mobile}`);
+            
+            if(sessionManager.tabOpen){
+                if(sessionManager.tabSelected!=null){
+                    closeTab(mobile, logo, 0);
+                    openTab(mobile, logo, name, mType, 0);   
+                }
+                else{
+                    closeTab(mobile, logo, 1000);
+                    sessionManager.tabSelected = null; //this is redundant? verify to make sure it isn't being included as part of a usability hack. If not, delete it.
+                }
+            }
+            else{
+                openTab(mobile, logo, name, mType, 1000);
+            }
+        }
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-104906339-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    
+    <div id='main-app-container'>
+        <div id='map-container'></div>
+        <div class='page1' id='welcome-text'>
+            <h2 class='welcome-header'>Welcome to BE</h2>
+            <h3 class='welcome-paragraph'>
+                This is a community exploration tool that lets you discover local points of interest through immersive experiences.
+            </h3>
+            <h3 class='welcome-paragraph'>
+                Click on a point on the map and then press "Go To VR" to view the Virtual Reality experience associated with that location. After you explore be sure to share this with your friends and check back soon for updates!
+            </h3>
+            <h3 class="welcome-paragraph">
+                BE is in it's Beta stage, if you find any bugs, have some suggestions or questions, or are interested in getting your company featured on this app please contact us <a style="text-decoration: underline; color: lightblue;" href="./form">here</a>. Enjoy!
+            </h3>
+        </div>
+        <input type='submit' id='veldt-logo' value='be'/>
+        <div id='logo-label'>Tap logo to continue</div>
+        <div id='cover'>
+            <div id='close-tab-button' class='tab-options'></div>
+            <div id='view-experience-button' class='tab-options'></div>
+            <div id='open-profile-button' class='tab-options dashboard-option'></div>
+            <div id='share-experience-button' class='tab-options'></div>    
+        </div>
+        <div id='tab-poi-identifier-container' class='page2'>
+            <span id='tab-poi-identifier'>place of interest&nbsp;|&nbsp;</span>
+            <span id='tab-poi-type'>type</span>
+        </div>
+        <div id='profile-container' class='page2'>
+            <div id='explore-view' class='dashboard-option' type='button'></div>
+            <h4 id='user-profile-header-label'>Currently in</h4>
+            <h3 id='user-profile-header-city'>College Park</h3>
+            <div id='user-profile-pic'></div>
+            <div id='user-name-label'>Location</div>
+            <div id='reservation-label'>Upcoming Shows and Events</div>
+            <div id='reservation-container'>
+            </div>
+        </div>
+        
+    <div id='share-media-overlay' class='page2'>
+        <div id='return-view'></div>
+        <h3 style='margin: 1% auto 5% auto;'>Share Media</h3>
+        <div id='share-media-options'>
+            <a id='copyButton' class='share-link-option fa fa-clone fa-5x btn' aria-hidden="true" data-clipboard-text="ter.ps/bevr"></a>
+
+            <div class="fb-share-button share-link-option" data-href="https://starmaker2130.github.io" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore fa fa-facebook-official fa-5x" aria-hidden="true" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fstarmaker2130.github.io%2F&amp;src=sdkpreparse"></a></div>
+            
+            <a class="twitter-share-button share-link-option fa fa-twitter fa-5x" aria-hidden="true" href="https://twitter.com/intent/tweet?text=Visit%20College%20Park"></a>
+        </div>
+    </div>
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRT48uyaJCAnmNKTw_W_i9anT9YcmqkG0&callback=initMap">
+    </script>
+    </div>
+</body>
+</html>

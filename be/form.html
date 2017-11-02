@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BE - Contact Form</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' href='css/contactpage.css' type='text/css' />
+</head>
+<body>
+    <div class="contact-container">
+        <h2>BE Contact Form</h2>
+        <div id='description-paragraph'>
+            Thank you for using BE! Please fill out and submit the form below if you have any questions, concerns, or suggestions regarding the app.
+        </div>
+        <form method="POST" action="https://formspree.io/bevirtualreality@gmail.com.">
+            <div class="form-group person-info">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            </div>
+            <div class="form-group person-info">
+                <label for="Name">Name:</label>
+                <input type="name" class="form-control" id="name" placeholder="Enter name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea type="message" class="form-control" id="message" placeholder="Enter Your Message Here" name="msg"></textarea>
+            </div>
+            <button type="submit" style='height: 25px; width: 75px; border-radius: 5px;' class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

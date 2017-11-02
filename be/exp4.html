@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <title></title>
+    <script src='js/jquery-1.14.1.min.js'></script>
+    <script src='js/aframe.min.js'></script>
+    <script src='https://npmcdn.com/aframe-template-component@3.1.1'></script>
+    <script src='https://npmcdn.com/aframe-event-set-component@3.0.1'></script>
+    <script src='https://cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.6/dist/aframe-extras.min.js'></script>
+
+    <!-- Bootstrap Bootswatch theme CSS - other themes available here: https://bootswatch.com -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/thomaspark/bootswatch/gh-pages/slate/bootstrap.min.css" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="./css/font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <!-- Custome CSS -->
+    <link rel="stylesheet" href="./css/loadingpage-style.css" />
+
+    <!-- Bootstrap Dependencies -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- A-Frame JS Dependencies -->
+    <script src="./js/aframe-preloader-component.js"></script>
+
+    <script>
+        var sessionManager = {
+            openPanels: [false, false, false]
+        };
+        
+        function identifySelection(selection){
+            var id = selection.attr('id');
+            var position = parseInt(id.charAt(id.length-1))-1;
+            console.log(`clicked on ${id} | position: ${position} | previously open? ${sessionManager.openPanels[position]}`);
+            var container = selection;
+            
+            if(sessionManager.openPanels[position]){
+                console.log(`#factoid-${position}`);
+                var panel = document.querySelector(`#factoid-${position}`);
+                panel.parentNode.removeChild(panel);
+                container.attr('visible', 'true');
+                
+                //$('a-scene').remove(`#factoid-${position}`);
+                sessionManager.openPanels[position] = false;
+            }
+            else{
+                var end = parseInt(id.charAt(id.length-1));
+                console.log(end);
+
+                var choice = retrieveCorrespondingFactoid(end);
+                console.log(choice);
+                sessionManager.openPanels[position] = true;
+                    
+                
+                container.attr('visible', false);
+                    
+                var pos = container.attr('position');
+                var rot = container.attr('rotation');
+                var yRot = rot.y;
+                if(end==2){
+                    yRot = 20;
+                }
+                $('a-scene').append(`<a-entity id='factoid-${position}' geometry='primitive: plane; width: 3; height: 3' position = '${pos.x} ${pos.y} ${pos.z}' material='src: ${choice}' rotation = '${rot.x} ${yRot} ${rot.z}'></a-plane>`);
+            }
+        }
+                
+        function retrieveCorrespondingFactoid(itemNum){
+            var text = '';
+            switch(itemNum){
+                case 1:
+                    text += '#desc1';
+                    break;
+                case 2:
+                    text += '#desc2';
+                    break;
+                case 3:
+                    text += '#desc3';
+                    break;
+                default:
+                    break;
+            }
+            return text;
+        }
+        
+        $(document).ready(function(){
+            setTimeout(function(){
+                console.log('event handlers added');
+                $('.readme-button').click(function(){
+                    identifySelection($(this));                    
+                    console.log('added');
+                });
+            }, 5000);
+
+            sceneEl = document.querySelector("#main-app-container");
+            cam = document.querySelector("#head");
+
+            if (!AFRAME.utils.device.isMobile()) {
+                cam.setAttribute('universal-controls', "movementEnabled: false");
+                document.querySelector('#mobileDirections').style.display = 'none';
+            }
+            else{
+                document.querySelector('#DesktopDirections').style.display = 'none';
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <div id="preloader-modal" class="modal instructions-modal" tabindex="-1" role="dialog" style="display: none;">
+      <div class="modal-dialog modal-dialog__full" role="document">
+        <div class="modal-content vertical-align text-center">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="row">
+              <div class="col-xs-12">
+                <h2 id="mobileDirections">To explore slide your finger on the screen
+                    <i class="fa fa-hand-o-up fa-2x image-icon" aria-hidden="true"></i>
+                    or tilt your mobile device. Hover the circular cursor over items to select them. You can click this icon
+                    <img src="./img/icons/cardboardlogo.png" class = "image-icon image"></img>
+                    to change the viewing experience for virtual reality.
+                </h2>
+                <h2 id="DesktopDirections">To explore click the screen and use the circular cursor to hover over objects and select them.
+                    To release your cursor press escape. You can also click this icon
+                    <img src="./img/icons/cardboardlogo.png" class = "image-icon image"></img>
+                    to change the viewing experience for virtual reality.
+                </h2>
+                <i class="preloader-modal__ok fa fa-check fa-5x text-success" aria-hidden="true"></i>
+                <i class="preloader-modal__spinner fa fa-cog fa-spin fa-5x fa-fw text-muted" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <h2 class="progress-label">Loading 0%</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <button type="button" class="btn-lg btn-default clearfix" data-dismiss="modal" onclick="addClick()">Start</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a-scene id="main-app-container" preloader="autoInject: false; clickToClose: true; autoClose: true; target: #preloader-modal; bar: #preloader-modal .progress-bar; label: #preloader-modal .progress-label; labelText: Loading {0}%; doneLabelText: Press Start To Begin!;">
+        <a-assets>
+            <img id='museum-photo-2' src='img/exp/museum/R0010470.JPG' preload="true"/>
+            <audio id='wilbur-speech' preload="true" src='img/immersive/media/sounds/wilbur3.mp3'></audio>
+            
+            <img id='select-rectangle' src='img/icons/selectRect.png' preload="true"/>
+            <img id='select-square' src='img/icons/selectSquare.png' preload="true"/>
+            
+            <img id='desc1' src='img/icons/desc1.png' preload="true"/>
+            <img id='desc2' src='img/icons/desc2.png' preload="true"/>
+            <img id='desc3' src='img/icons/desc3.png' preload="true"/>
+
+            <img id=tripodCover src="./img/icons/BE_tripodLogo.png" preload="true"></img>
+            <img id="visitDesc" src="./img/icons/parkVisitButton.png" preload="true"></img>
+        </a-assets>
+        
+        <a-camera id='head' wasd-controls-enabled="false">
+            <a-cursor
+                      animation__click='property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150' animation__fusing='property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1000'
+                      event-set__1='_event: mouseenter; color: springgreen; scale: 1.2 1.2 1'
+                      event-set__2='_event: mouseleave; color: black; scale: 1 1 1'
+                      event-set__3='_event: mousedown; scale: 1 1 1'
+                      fuse='true'
+                      raycaster='objects: .readme-button'>
+            </a-cursor>
+        </a-camera>
+        
+        <a-plane src="#tripodCover" position="1 0 0" rotation="-90 0 0" scale="1.5 1.5 1.5" transparent="true"></a-plane>
+
+        <a-entity sound='src: #wilbur-speech; autoplay: true;'></a-entity><!---->
+        
+        <a-plane id='read-me-1' class='readme-button' material='src: #select-square' height='0.9' width='1' position='-1.9 -1 -0.4' rotation='-45 90 0' ></a-plane>
+        
+        <a-plane id='read-me-2' class='readme-button' material='src: #select-square' height='1' width='1' position='-2.5 -1 -4' rotation='-45 105 0' ></a-plane>
+        
+        <a-plane id='read-me-3' class='readme-button' material='src: #select-rectangle' height='1.5' width='1' position='-1.8 1 -5' rotation='0 10 0'></a-plane>
+        
+        <a-sky id='sky' src='#museum-photo-2'></a-sky>
+    </a-scene>
+</body>
+</html>

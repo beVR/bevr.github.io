@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <title>Museum Experience</title>
+    <script src='js/jquery-1.14.1.min.js'></script>
+    <script src='js/aframe.min.js'></script>
+    <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
+    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
+
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.6/dist/aframe-extras.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+        	//CHANGED: Added this to hide the mouse on desktop
+        	if (!AFRAME.utils.device.isMobile()) {
+
+		    	cam = document.querySelector("#head");
+		    	cam.setAttribute('universal-controls', "movementEnabled: false");
+		    }
+
+		    //CHANGED: use these variables below
+            var entity = document.querySelector('#flying_plane');
+            var goButton = document.querySelector('#go');
+            var raycaster = document.querySelector('[raycaster]');
+            
+            //entity.components.sound.stopSound();
+            //entity.components.sound.pauseSound();
+            
+            //CHANGED: added some code so the go button is only interactable
+            //when the menu is visible
+            setTimeout(function(){
+                //entity.components.sound.playSound();
+                entity.emit('play_audio');
+
+                setTimeout(function(){
+                	goButton.setAttribute('class', 'link');
+                	raycaster.components.raycaster.refreshObjects();
+                }, 5000);
+            }, 10000);
+            
+            $('#go').click(function(){
+                //CHANGED: This takes you the the museums website
+                window.location.href = "http://www.collegeparkaviationmuseum.com/home.htm";
+            });
+        });
+    </script>
+</head>
+<body>
+    <a-scene id='main-app-container'>
+        <a-assets>
+            <img id='museum' src='img/exp/cp_aviation_museum.jpg'/><!--
+            <img id='grid' src='../img/immersive/media/assets/grid_base.png'/>-->
+            <a-asset-item id='aeroplane' src='img/immersive/media/assets/3.2.dae'></a-asset-item>
+            <a-asset-item id='flyby' src='img/immersive/media/sounds/flyby1.mp3'></a-asset-item>
+            
+            <!--CHANGED: took away the class attribute -->
+            <script id="link" type="text/html">
+                <a-entity 
+                geometry="primitive: plane; height: 2; width: 2"
+                material='color: yellow'
+                rotation='-180 0 180'
+                position='0 0 19'
+                text='width: 10; height: 10; align: center; value: GO'
+                event-set__1="_event: mousedown; scale: 1 1 1"
+                event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                event-set__4="_event: mouseleave; scale: 1 1 1"></a-entity>
+            </script>
+        </a-assets>
+        
+        <a-entity id="flying_plane" collada-model='#aeroplane' position='0 5 100' rotation='0 180 0' sound='src: #flyby; autoplay: false; on: play_audio'>
+            <a-animation attribute='position' from='0 5 100' to='0 5 -50' delay='10000' dur='10000'></a-animation>
+        </a-entity>
+        
+        <a-plane color='blue' height='10' width='10' rotation='-180 0 180' position='0 1.6 20' visible='false'  text='width: 9; height: 4; align: center; value: Visit the College Park Airport and Museum!\nFocus on the button below to reserve your tickets now.'>
+            <a-animation attribute='visible' delay='15000' to='true'></a-animation>
+        </a-plane>
+        
+        <a-entity id='go' visible='false' template='src: #link;'>
+        	<!--CHANGED: changed the delay time from 17000 to 15000 to match the blue panel -->
+            <a-animation attribute='visible' delay='15000' to='true'></a-animation>
+        </a-entity>
+    <!--  --> 
+
+    	<!-- CHANGED: Took away some components here because they are places with the universal controls, also rotated camera 180 degrees-->
+        <a-camera id="head" position='0 1 5' rotation='0 180 0'>
+            <a-cursor animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150" animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500" event-set__1="_event: mouseenter; color: springgreen" event-set__2="_event: mouseleave; color: black" fuse="true" raycaster="objects: .link">
+            </a-cursor>   
+        </a-camera>
+
+       <!--  <a-plane src='#grid' material='repeat: 100 100' height='100' width='100' rotation='-90 0 0'></a-plane>-->
+       <a-sky src='#museum'></a-sky><!---->
+    </a-scene>
+    <!-- DONE) animate appearance of plane
+DONE) add text to plane
+3) attach camera to top of airplane
+4) animate zooming into the cockpit
+5) "teleport" to a new scene if needed
+6) record panic audio "i need your help to land this plane!"
+7) "look around for the smart auto pilot engage feature!"
+8) nice now before i can handle the landing procedure I need to verify that you're a human
+9) "sorry I'm first generation i dont actually have a camera eye to see"
+10) "dont worry entry is simple just answer this simple entry question"
+11) "who were the first people to fly in and out of the college park airport after its establishment?"
+12a) if they choose correctly "The Wright Brothers" they plane lands and they get a view of the airport
+12b) if they choose incorrectly then the plane keeps going alarms go off and a portal appears before them
+the autpilot tells the user to brace for teleportation! and then the user ends up in the museum in fornt of the screen telling them to go to the museum-->
+
+<!-- 
+TODO LIST:
+1)Add logo over tripod
+2)create better looking UI
+3)Add option to replay
+4)Make plane disapear 
+5)add working link to Go button
+6)fix sound (May need to find a new audio clip error with loading)
+7)Add some more simple features
+-->
+</body>
+</html>
