@@ -55,11 +55,21 @@
 
     <!-- Header -->
     <header class="header" id="top">
+
       <div id='headerOuter' class="text-vertical-center">
-        <h1>PolisVR</h1>
-        <h3 id='tagLine' >explore communities,<br>augment your world,<br>be there</h3>
-        <br>
-        <a href="#about" class="btn btn-dark btn-lg js-scroll-trigger">Find Out More</a>
+        <!-- <h1>Polis VR</h1> -->
+        <div id=header-text-logo>
+          <img id='polis-logo' src="./img/polis_logo.png">
+          <h1>
+      		  <span class="typer" id="main" data-words="explore communities,augment your world,be there" data-colors="black" data-delay="100" data-deleteDelay="1000"></span>
+      		  <span class="cursor" data-owner="main"></span>
+    		  </h1>
+
+          <br>
+          <!-- <h3 id='tagLine' >explore communities,<br>augment your world,<br>be there</h3> -->
+          <a href="#about" class="btn btn-dark btn-lg js-scroll-trigger topButtons">Find Out More</a>
+          <a href="http://ter.ps/bevr" class="btn btn-dark btn-lg js-scroll-trigger topButtons" style="width:150px">Visit BEvr</a>
+        </div>
       </div>
     </header>
 
@@ -89,7 +99,7 @@
                     <strong>EVERYWHERE</strong>
                   </h4>
                   <p>Our platforms are based on Mozilla's WebVR standard allowing our experiences to be viewed on the majority of consumer devices including current generation smartphones (through the Google Chrome web browser) and current generation XR devices like the Oculus Rift, HTC Vive, and Microsoft Hololens.</p>
-                  <a href="#" class="btn btn-light">Learn More</a>
+                  <!-- <a href="#" class="btn btn-light">Learn More</a> -->
                 </div>
               </div>
               <div class="col-md-4 col-sm-6">
@@ -102,7 +112,7 @@
                     <strong>IMMERSIVE</strong>
                   </h4>
                   <p>The BE Virtual Reality platform transports users into venues where they will be able to live through experiences as if they were actually present. The sights and sounds of the locations for the platform have been captured using the latest virtual reality recording and produced by our virtual designers to be not only realistic, but enjoyable in order to leave you with moments you can never forget.</p>
-                  <a href="#" class="btn btn-light">Learn More</a>
+                  <!-- <a href="#" class="btn btn-light">Learn More</a> -->
                 </div>
               </div>
               <div class="col-md-4 col-sm-6">
@@ -115,7 +125,7 @@
                     <strong>ENGAGING</strong>
                   </h4>
                   <p>The greatest joys are those that can never be replicated and thus never forgotten. Our studio works to produce immersive experiences that revolve around the users curiosity in a way that makes each interaction a memorable one. </p>
-                  <a href="#" class="btn btn-light">Learn More</a>
+                  <!-- <a href="#" class="btn btn-light">Learn More</a> -->
                 </div>
               </div>
               <!-- <div class="col-md-3 col-sm-6">
@@ -156,7 +166,7 @@
         <div class="row">
           <div class="col-md-4 mx-auto text-center">
             <div class="portfolio-item">
-              <a href="#">
+              <a href="http://ter.ps/bevr">
                 <img class="img-portfolio img-fluid" src="img/BE_tripodLogo.png">
               </a>
             </div>
@@ -166,7 +176,7 @@
           <div class="col-md-6 mx-auto text-center">
             <div class="portfolio-item" style="padding-top: 15%">
               <p>BEvr is a web based platform that allows users to expererience their community in virtual realty. Through BEvr users can explore
-              immersive and interactive vr experiences of unique points of interests around them learning more about their local community.
+              immersive and interactive vr experiences of unique points of interests around them. In BEvr's beta version you can explore locations around College Park and The University of Marylands Campus!
               </p>
             </div>
           </div>
@@ -175,7 +185,7 @@
         <!-- /.row -->
       </div>
       <div style="text-align: center">
-      <a href="#" class="btn btn-dark" style="width: 150px; height: 30%">Visit</a>
+      <a href="http://ter.ps/bevr" class="btn btn-dark" style="width: 150px; height: 30%">Visit</a>
       </div>
       <!-- /.container -->
     </section>
@@ -190,19 +200,19 @@
     </aside> -->
 
     <!-- Map -->
-    <section id="contact" class="map">
+  <!--   <section id="contact" class="map">
            <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=StartupShell,+Technology+Drive,+College+Park,+MD&amp;aq=0&amp;oq=polisvr&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=PolisVR,+Technology+Drive,+College+Park,+MD&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
       <br/>
       <small>
         <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=StartupShell,+Technology+Drive,+College+Park,+MD&amp;aq=0&amp;oq=polisvr&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=PolisVR,+Technology+Drive,+College+Park,+MD&amp;t=m&amp;z=15&amp;iwloc=A"></a>
       </small>
-    </section>
+    </section> -->
 
     <!-- Footer -->
-    <footer>
+    <footer style="background-color: darkgray">
       <div class="container">
         <div class="row">
-          <div class="col-lg-10 mx-auto text-center">
+          <div class="col-lg-10 mx-auto text-center" >
             <h4>
               <strong>Polis VR</strong>
             </h4>
@@ -218,7 +228,7 @@
               </li>
             </ul>
             <br>
-            <ul class="list-inline">
+            <!-- <ul class="list-inline">
               <li class="list-inline-item">
                 <a href="#">
                   <i class="fa fa-facebook fa-fw fa-3x"></i>
@@ -234,9 +244,9 @@
                   <i class="fa fa-dribbble fa-fw fa-3x"></i>
                 </a>
               </li>
-            </ul>
-            <hr class="small">
-            <p class="text-muted">Copyright &copy; PolisVR 2017</p>
+            </ul> -->
+            <hr class="small" style="background-color: darkgrey">
+            <p >Copyright &copy; PolisVR 2017</p>
           </div>
         </div>
       </div>
@@ -254,6 +264,8 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/stylish-portfolio.js"></script>
+
+    <script src="typer.js"></script>
 
   </body>
 
