@@ -162,6 +162,13 @@ hr.small {
   background-size: cover;
 }
 
+.typerText{
+
+  width: 100%;
+  height: 50%;
+  text-align: center;
+}
+
 .topButtons{
 
   margin: 5px;
@@ -176,6 +183,16 @@ hr.small {
 #header-text-logo{
 
   margin-bottom: 180px;
+}
+
+@media (max-width: 767px) {
+  .header{
+
+    background: url(../img/bg.jpg) no-repeat center center scroll;
+  }
+  .typer{
+    font-size: 9vw;
+  }
 }
 
 
