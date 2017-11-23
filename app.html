@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>be | augment your life, explore the world</title>
+    <link rel='stylesheet' href='./css/main.css' type='text/css' />
+    <script src='./js/jquery-1.14.1.min.js'></script>
+    <script>
+        function loadingAnimation(count){
+            var next = count - 1;
+            
+            $('#loading-label').animate({
+                opacity: 0
+            }, 1000, function(){
+                
+             /*   $('#hov-logo').animate({
+                    opacity: 0
+                }, 1000, function(){
+                    $(this).animate({
+                        opacity: 1.0
+                    }, 1000);
+                });*/
+                
+                $(this).animate({
+                    opacity: 1.0
+                }, 1000, function(){
+                    if(next>0){
+                        loadingAnimation(next);
+                    }
+                    else{
+                        setTimeout(function(){
+                            $('#overlay').contents().animate({
+                                opacity: 0
+                            }, 1000, function(){
+                                $('#loading-container').hide();
+                            });
+
+                            setTimeout(function(){
+                                $('#overlay').animate({
+                                    height: 0
+                                }, 1000, function(){
+                                    $(this).hide();
+                                });
+                            }, 1000);
+                        }, 3000);
+                        
+                    }
+                });
+            });
+        }
+        
+        function selectExperience(expNum){
+            var id = expNum;
+            var upperBound = $(`#${id}`).offset().top;
+            console.log(`selected experience ${id} | upper bound : ${upperBound}`);
+            
+            /*.animate({
+                scrollTop: upperBound
+            });*/
+            
+            $('#main-app-container').animate({
+                scrollTop: $(`#${id}`).offset().top - $('#main-app-container').offset().top + $('#main-app-container').scrollTop()
+            });
+            
+            var pos = sessionManager.selected.indexOf(id);
+            if(pos<0){
+                sessionManager.selected.push(id);
+                $(`#${id}`).animate({
+                    width: '100%',
+                    height: '100%'
+                }, 1000);
+                
+                $('#overlay').css({
+                    'background-color':'rgba(0, 0, 0, 0.5)'
+                }).show().append(`<div id='experience-info-container'><div class='exp-title'>Experience Title</div><div class='exp-location'>Location</div><div class='exp-description'>Description</div><input type='button' id='close-preview-button' value='close' /><input type='button' id='open-preview-button' value='open' /></div>`).animate({
+                    height: '100%'
+                }, 1000, function(){
+                    $('#close-preview-button').click(function(){
+                        $(`#${sessionManager.selected[0]}`).animate({
+                            height: '250px'
+                        }, 1000, function(){
+                            sessionManager.selected.shift();
+                        });
+                        
+                        $('#overlay').contents().animate({
+                            opacity: 0
+                        }, 1000, function(){
+                            $('#overlay').empty().animate({
+                                height: 0
+                            }, 1000, function(){
+                                $(this).css({
+                                    opacity: 1.0
+                                }).hide();
+                            });
+                        }) 
+                    });
+                    
+                    $('#open-preview-button').click(function(){
+                        var selection = sessionManager.selected[0];
+                        var source = sessionManager.directory[selection];
+                        console.log(`send to: ${source}`);
+                        
+                        $(`#${selection}`).children('iframe').attr('src', source).show();
+                        
+                        $('#overlay').contents().animate({
+                            opacity: 0
+                        }, 1000, function(){
+                            $('#overlay').empty().animate({
+                                height: 0
+                            }, 1000, function(){
+                                $(this).css({
+                                    opacity: 1.0
+                                }).hide();
+                            });
+                        }) 
+                    });
+                    
+                });
+            }
+            else{
+                
+            }
+            
+        }
+        
+        function attachEventListeners(){
+            $('.experience-container').click(function(){
+                var id = $(this).attr('id');
+                selectExperience(id);
+            });
+            
+        }
+        
+        function loadAppContent(){
+            loadingAnimation(3);
+            attachEventListeners();
+        }
+        
+        var sessionManager = {
+            selected: [],
+            directory: {
+                'exp-0' : './be/artSoc.html',
+                'exp-1' : './be/CSPAC.html',
+                'exp-2': './be/esj.html',
+                'exp-3': './be/park.html',
+                'exp-4': './be/tour.html',
+                'exp-5': './be/MilkBoyArtHouse.html',
+                '3xp-6': './be/exp4.html',
+            }
+        };
+        
+        $(document).ready(function(){
+            loadAppContent();
+        });
+    </script>
+</head>
+<body>
+    <div id='main-app-container'>
+        <div id='overlay'>
+            <div id='loading-container'>
+                <svg id='hov-logo' height="50" width="50">
+                    <polygon points='0,0 50,0 25,45' style="fill:white;stroke:white;stroke-width:1" />
+                </svg>
+                <div id='loading-label'>loading</div>
+            </div>
+        </div>
+        <div id='exp-0' class='experience-container'>
+            <iframe style='display: none; height: 89%; width: 100%;' src=''></iframe>
+            <div id='exp-0-rating' class='rating'>&#x1F525;&#x1F525;&#x1F525;</div>
+        </div>
+        <div id='exp-1' class='experience-container'>
+            <iframe style='display: none; height: 89%; width: 100%;' src=''></iframe>
+            <div id='exp-1-rating' class='rating'>&#x1F525;&#x1F525;</div>
+        </div>
+        <div id='exp-2' class='experience-container'>
+            <iframe style='display: none; height: 89%; width: 100%;' src=''></iframe>
+            <div id='exp-2-rating' class='rating'>&#x1F525;&#x1F525;&#x1F525;&#x1F525;</div>
+        </div>
+        <div id='exp-3' class='experience-container'>
+            <iframe style='display: none; height: 89%; width: 100%;' src=''></iframe>
+            <div id='exp-3-rating' class='rating'>&#x1F525;</div>
+        </div>
+        <div id='exp-4' class='experience-container'>
+            <div id='exp-4-rating' class='rating'>&#x1F525;&#x1F525;</div>
+        </div>
+        <div id='exp-5' class='experience-container'>
+            <div id='exp-5-rating' class='rating'>&#x1F525;&#x1F525;&#x1F525;&#x1F525;&#x1F525;</div>
+        </div>
+        <div id='exp-6' class='experience-container'>
+            <div id='exp-6-rating' class='rating'>&#x1F525;&#x1F525;&#x1F525;&#x1F525;</div>
+        </div>
+        <div id='dashboard-container' class='footer'>
+            <div id='menu-button' class='dashboard-button'>+</div>
+            <div id='help-button' class='dashboard-button'>?</div>
+        </div>
+    </div>
+</body>
+</html>
