@@ -24,18 +24,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <!-- A-Frame JS Dependencies -->
-    <script src="./js/aframe-preloader-component.js"></script>
-
-    <!-- Google Analytics -->
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-104906339-1', 'auto');
-      ga('send', 'pageview');
-    </script>
+<!--     <script src="./js/aframe-preloader-component.js"></script> -->
 
     <script>
 
@@ -58,12 +47,12 @@
 
     	    	cam.setAttribute('universal-controls', "movementEnabled: false");
 
-                 document.querySelector('#mobileDirections').style.display = 'none';
     	    }
           else{
 
-              document.querySelector('#DesktopDirections').style.display = 'none';
           }
+
+          addClick();
     	});
 
       function addClick(){
@@ -154,7 +143,7 @@
 </head>
 <body>
 
-    <div id="preloader-modal" class="modal instructions-modal" tabindex="-1" role="dialog" style="display: none;">
+    <!-- <div id="preloader-modal" class="modal instructions-modal" tabindex="-1" role="dialog" style="display: none;">
       <div class="modal-dialog modal-dialog__full" role="document">
         <div class="modal-content vertical-align text-center">
           <div class="col-md-6 col-md-offset-3">
@@ -188,32 +177,32 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <a-scene id='main-app-container' preloader="autoInject: false; clickToClose: true; autoClose: true; target: #preloader-modal; bar: #preloader-modal .progress-bar; label: #preloader-modal .progress-label; labelText: Loading {0}%; doneLabelText: Press Start To Begin!;">
+    <a-scene id='main-app-container'>
 
      	<a-assets>
-     		<img id="atrium" src="./img/CSPAC/CSPAC.jpg" preload="true"/>
+     		<img id="atrium" src="./img/CSPAC/CSPAC.jpg"/>
 
-     		<img id="highwaymen" src="./img/CSPAC/600_Highwaymen.jpg" preload="true"/>
-     		<img id="antigone" src="./img/CSPAC/Antigone.png" preload="true"/>
-     		<img id="belarus" src="./img/CSPAC/Belarus_Theatre.jpg" preload="true"/>
-     		<img id="showcase" src="./img/CSPAC/ChoreoShowcase35.jpg" preload="true"/>
-     		<img id="clove" src="./img/CSPAC/Clove.jpg" preload="true"/>
-     		<img id="DAB" src="./img/CSPAC/DAB_Band.jpg" preload="true"/>
-     		<img id="eurydice" src="./img/CSPAC/eurydice.jpg" preload="true"/>
+     		<img id="highwaymen" src="./img/CSPAC/600_Highwaymen.jpg"/>
+     		<img id="antigone" src="./img/CSPAC/Antigone.png"/>
+     		<img id="belarus" src="./img/CSPAC/Belarus_Theatre.jpg"/>
+     		<img id="showcase" src="./img/CSPAC/ChoreoShowcase35.jpg"/>
+     		<img id="clove" src="./img/CSPAC/Clove.jpg"/>
+     		<img id="DAB" src="./img/CSPAC/DAB_Band.jpg"/>
+     		<img id="eurydice" src="./img/CSPAC/eurydice.jpg"/>
 
-     		<img id="highwaymenDesc" src="./img/CSPAC/highwaymen.png" preload="true"/>
-     		<img id="antigoneDesc" src="./img/CSPAC/antigoneDesc.png" preload="true"/>
-     		<img id="belarusDesc" src="./img/CSPAC/belarus.png" preload="true"/>
-     		<img id="showcaseDesc" src="./img/CSPAC/showcase.png" preload="true"/>
-     		<img id="cloveDesc" src="./img/CSPAC/clove.png" preload="true"/>
-     		<img id="DABDesc" src="./img/CSPAC/DAB.png" preload="true"/>
-     		<img id="eurydiceDesc" src="./img/CSPAC/eurydice.png" preload="true"/>
+     		<img id="highwaymenDesc" src="./img/CSPAC/highwaymen.png"/>
+     		<img id="antigoneDesc" src="./img/CSPAC/antigoneDesc.png"/>
+     		<img id="belarusDesc" src="./img/CSPAC/belarus.png"/>
+     		<img id="showcaseDesc" src="./img/CSPAC/showcase.png"/>
+     		<img id="cloveDesc" src="./img/CSPAC/clove.png"/>
+     		<img id="DABDesc" src="./img/CSPAC/DAB.png"/>
+     		<img id="eurydiceDesc" src="./img/CSPAC/eurydice.png"/>
 
-     		<img id="welcome" src="./img/CSPAC/welcome.png" preload="true"/>
-            <img id=tripodCover src="./img/icons/BE_tripodLogo.png" preload="true"/>
-     		<img id="visitDesc" src="./img/CSPAC/parkVisitButton.png" preload="true"/>
+     		<img id="welcome" src="./img/CSPAC/welcome.png"/>
+            <img id=tripodCover src="./img/icons/BE_tripodLogo.png"/>
+     		<img id="visitDesc" src="./img/CSPAC/parkVisitButton.png"/>
 		</a-assets>
 
 <!--          <a-entity rotation = "0 180 0" position='0 1.4 -5' >

@@ -28,6 +28,16 @@ body {
   padding: 0;
 }
 
+iframe{
+      border: none;
+      display: block;
+      margin: 0 auto;
+      width: 500px;
+      height: 250px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
 
 /* Custom Button Styles */
 
